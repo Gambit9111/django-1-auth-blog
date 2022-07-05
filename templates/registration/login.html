@@ -1,0 +1,13 @@
+{% extends 'frontend/base.html' %}
+{% block title%} Login {% endblock %}
+{% block content%}
+
+<form method="post">
+{{form.as_p}}
+{% csrf_token %}
+<p> Dont have an account? Create one <a  href="{% url 'register' %}">Here</a>!</p>
+<p> Forgot your password? Reset <a  href="{% url 'password_reset' %}">Here</a>!</p>
+<button type="submit">Login</button>
+</form>
+
+{% endblock %}

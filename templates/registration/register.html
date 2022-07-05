@@ -1,0 +1,12 @@
+{% extends 'frontend/base.html' %}
+{% block title%} Register {% endblock %}
+{% block content%}
+
+<form method="post">
+{{form.as_p}}
+{% csrf_token %}
+<p> Have an account? Login <a  href="{% url 'login' %}">Here</a>!</p>
+<button type="submit">Register</button>
+</form>
+
+{% endblock %}

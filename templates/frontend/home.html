@@ -1,0 +1,36 @@
+{% extends 'frontend/base.html'%}
+{% block title%} Home page {% endblock %}
+{% block content%}
+
+<h1> Home page after you login, user {{ user }} </h1>
+
+{% if perms.auth.add_user %} <p><a href="{% url 'moderator' %}">Moderator panel</a></p> {% endif %}
+<p><a href="{% url 'logout' %}">Logout</a></p>
+{% if perms.frontend.add_post %} <p><a href="{% url 'create-post' %}">Post</a></p> {% endif %}
+
+
+{% for post in posts %}
+<hr>
+<h3> {{ post.author.username }} </h3>
+<h4> {{ post.title }} </h4>
+<h5> {{ post.description }} </h5>
+<p> {{ post.created_at }} </p>
+{% if user == post.author or perms.auth.add_user %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="post-id" value="{{ post.id }}"> Delete post </button>
+    </form>
+{% endif %}
+
+{% if perms.auth.add_user %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="user-id" value="{{ post.author.id }}"> Ban user </button>
+    </form>
+{% endif %}
+
+{% empty %}
+<hr>
+<p> No Posts yet </p>
+{% endfor %}
+{% endblock %}

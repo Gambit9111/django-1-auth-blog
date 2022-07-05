@@ -1,0 +1,31 @@
+{% extends 'frontend/base.html' %}
+{% block title%} Mod panel {% endblock %}
+{% block content%}
+<a href="{% url 'logout' %}">Logout</a>
+<h1> Welcome to mod panel </h1>
+<h3> Logged in as {{user}} <h3>
+{% if user.is_superuser %}
+<h2> You are a owner </h2>
+<a href="{% url 'create_admin' %}">Create administrator</a>
+<a href="{% url 'create_mod' %}">Create moderator</a>
+{% elif user.is_staff %}
+<h2> You are a administrator </h2>
+<a href="{% url 'create_mod' %}">Create moderator</a>
+{% endif %}
+<hr>
+
+<h3> All users </h3>
+{% for user in users %}
+    <h1> {{user.username}} </h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="user-id-delete-user" value="{{ user.id }}"> Delete user </button>
+    {% if user.groups.first.name == 'user' %}
+        <button type="submit" name="user-id-delete-posts" value="{{ user.id }}"> Delete posts </button>
+        <a href="{% url 'posts' user.id %}">View all users posts</a>
+    {% endif %}
+    </form>
+    <hr>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'frontend/base.html' %}
+{% block title%} user posts {% endblock %}
+{% block content%}
+
+<h1> All {{user.username}} posts </h1>
+<hr>
+
+{% for post in posts %}
+    <h2> {{post.title}} </h2>
+    <h3> {{post.description}} </h1>
+<hr>
+{% endfor %}
+
+{% endblock %}

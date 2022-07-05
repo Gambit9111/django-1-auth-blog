@@ -1,0 +1,15 @@
+{% extends 'frontend/base.html'%}
+{% block title%} Index page {% endblock %}
+{% block content%}
+
+{% if user.is_authenticated %}
+
+<p> Logged in as {{user.username}} </p>
+<p><a href="{% url 'home' %}">Home page</a></p>
+
+{% else %}
+<p><a href="{% url 'login' %}">Login</a></p>
+<p><a  href="{% url 'register' %}">Register</a>!</p>
+{% endif %}
+
+{% endblock %}
